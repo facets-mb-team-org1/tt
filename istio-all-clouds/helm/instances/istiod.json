@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.facets.cloud/schemas/helm/instances/helm.schema",
+  "flavor": "helm_simple",
+  "spec": {
+    "helm": {
+      "chart": "istiod",
+      "repository": "https://istio-release.storage.googleapis.com/charts",
+      "wait": true,
+      "namespace": "istio-system",
+      "recreate_pods" : false
+    },
+    "env": [
+      {
+        "name": "global.proxy.resources.limits.cpu",
+        "type": "static",
+        "default": "100m"
+      },
+      {
+        "name": "global.proxy.resources.limits.memory",
+        "type": "static",
+        "default": "128Mi"
+      },
+      {
+        "name": "global.proxy.resources.requests.cpu",
+        "type": "static",
+        "default": "100m"
+      },
+      {
+        "name": "global.proxy.resources.requests.memory",
+        "type": "static",
+        "default": "128Mi"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+	"flavor": "helm_simple",
+	"disabled": true,
+	"spec": {
+		"helm": {
+			"chart": "joomla",
+			"repository": "https://charts.bitnami.com/bitnami",
+			"wait": true,
+			"version": "13.3.11",
+			"namespace": "default"
+		},
+		"env": [],
+		"values": {
+			"mariadb": {
+				"enabled": false
+			},
+			"externalDatabase": {
+				"host": "${mysql.mysql-joomla.interfaces.writer.host}",
+				"port": "${mysql.mysql-joomla.interfaces.writer.port}",
+				"user": "${mysql.mysql-joomla.interfaces.writer.username}",
+				"password": "${mysql.mysql-joomla.interfaces.writer.password}",
+				"database": "joomla_db"
+			}
+		}
+	}
+}

@@ -1,0 +1,65 @@
+{
+    "$schema": "https://facets-cloud.github.io/facets-schemas/schemas/service/service.schema.json",
+    "kind": "service",
+    "disabled": true,
+    "version": "0.1",
+    "flavor": "aws",
+    "metadata": {
+      "labels": {
+      }
+    },
+    "spec": {
+      "type": "application",
+      "enable_host_anti_affinity": false,
+      "release": {
+        "strategy": {
+            "type": "RollingUpdate",
+            "max_available": 1,
+            "max_unavailable": 0
+        },
+        "image": "docker.io/bitnami/magento:2.4.5-p"
+      },
+      "runtime": {
+        "health_checks": {
+            "start_up_time": 80,
+            "timeout": 10,
+            "period": 30,
+            "port": 8080
+        },
+        "autoscaling": {
+          "min": 1,
+          "max": 1,
+          "cpu_threshold": 50
+        },
+        "ports": {
+            "http": {
+                "port": 8080,
+                "protocol": "tcp"
+            }
+        },
+        "size": {
+          "namespace": "GP",
+          "value": "SMALL"
+        }
+      },
+      "env": {
+        "MAGENTO_HOST": "${ingress.magento-ingress.domain}",
+        "MAGENTO_DATABASE_HOST": "${mysql.magento-mysql.out.interfaces.writer.host}",
+        "MAGENTO_DATABASE_USER": "${mysql.magento-mysql.out.interfaces.writer.username}",
+        "MAGENTO_DATABASE_PASSWORD": "${mysql.magento-mysql.out.interfaces.writer.password}",
+        "MYSQL_CLIENT_FLAVOUR": "mysql",
+        "MYSQL_CLIENT_DATABASE_HOST": "${mysql.magento-mysql.out.interfaces.writer.host}",
+        "MYSQL_CLIENT_DATABASE_ROOT_USER": "${mysql.magento-mysql.out.interfaces.writer.username}",
+        "MYSQL_CLIENT_DATABASE_ROOT_PASSWORD": "${mysql.magento-mysql.out.interfaces.writer.password}"
+      },
+      "restart_policy": "OnFailure"
+    },
+    "advanced": {
+        "aws": {
+          "iam": {
+          }
+        }
+    }
+  }
+  
+  

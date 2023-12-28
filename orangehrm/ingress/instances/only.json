@@ -1,0 +1,27 @@
+{
+    "flavor": "nlb_nginx",
+    "version": "0.1",
+    "kind": "ingress",
+    "disabled": false,
+    "metadata": {
+      "name": "only",
+      "annotations": {}
+    },
+    "spec": {
+      "basicAuth": false,
+      "private": false,
+      "domains": {
+      },
+      "rules": {
+        "all-traffic": {
+          "service_name": "${service.orangehrm.out.interfaces.main.name}",
+          "path": "/*",
+          "port": "${service.orangehrm.out.interfaces.main.port}",
+          "domain_prefix": ""
+        }
+      },
+      "force_ssl_redirection": true
+    },
+    "advanced": {
+    }
+  }
